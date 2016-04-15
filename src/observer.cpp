@@ -60,8 +60,9 @@ void IoTObserver::initializePlatform()
 
 void IoTObserver::findResource()
 {
-    cout << __PRETTY_FUNCTION__ << endl;
-    string coap_multicast_discovery = string(OC_RSRVD_WELL_KNOWN_URI "?if=" );
+    cout << __PRETTY_FUNCTION__<< endl;
+    string coap_multicast_discovery = string(OC_RSRVD_WELL_KNOWN_URI);
+    coap_multicast_discovery += "?if=";
     coap_multicast_discovery += Config::m_interface;
     OCConnectivityType connectivityType(CT_ADAPTER_IP);
     OCPlatform::findResource("", coap_multicast_discovery.c_str(),
@@ -164,7 +165,7 @@ int main(int argc, char *argv[])
     IoTObserver observer;
     cout << "Performing Discovery..." << endl;
     observer.findResource();
-    int choice;
+    int choice = 0;
     do
     {
         cin >> choice;
