@@ -40,7 +40,7 @@ CPPFLAGS=-I. \
  -I$(PKG_CONFIG_SYSROOT_DIR)/usr/include/iotivity/resource/oc_logger/ \
  -I$(PKG_CONFIG_SYSROOT_DIR)/usr/include/iotivity/resource/stack/
 
-CXXFLAGS+=-std=gnu++0x
+CXXFLAGS+=-std=c++11
 LIBS+= -loc -loc_logger -loctbstack
 
 srcs?=config.cpp
