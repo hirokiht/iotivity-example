@@ -1,0 +1,11 @@
+[Unit]
+Description="Iotivity example-geolocation server"
+After=network.target
+
+[Service]
+ExecStart=/opt/iotivity-example-geolocation/server
+Restart=always
+
+[Install]
+WantedBy=default.target
+
