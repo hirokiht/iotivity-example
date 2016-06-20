@@ -31,6 +31,14 @@ using namespace OC;
 
 bool IoTServer::m_over = false;
 
+double IoTServer::m_lat = 48.1033;
+double IoTServer::m_lon = -1.6725;
+double IoTServer::m_offset = 0.001;
+
+
+double IoTServer::m_latmax = 49;
+double IoTServer::m_latmin = 48;
+
 IoTServer::IoTServer()
 {
     cerr << __PRETTY_FUNCTION__ << endl;
@@ -223,10 +231,34 @@ OCEntityHandlerResult IoTServer::handleEntity(shared_ptr<OCResourceRequest> Requ
 void IoTServer::update()
 {
     cerr << __PRETTY_FUNCTION__ << endl;
-    istream *stream = &std::cin;
-    std::string line;
-    std::getline(*stream, line);
-    m_Representation.setValue(Config::m_key, line);
+
+    {
+        string line = "";
+        time_t const now = time(0);
+        char *dt = ctime(&now);
+        line = string(dt);
+        m_Representation.setValue(Config::m_key, line);
+    }
+
+    {
+        m_lat += m_offset;
+        m_lon += m_offset;
+
+        if (m_lat > m_latmax)
+        {
+            if (m_offset > 0) { m_offset = - m_offset; }
+        }
+        else if (m_lat < m_latmin)
+        {
+            if ( m_offset < 0 ) m_offset = - m_offset;
+        }
+
+        m_Representation.setValue("lat", m_lat);
+        m_Representation.setValue("lon", m_lon);
+
+        cerr << "location: " << std::fixed << m_lat << "," << std::fixed << m_lon << std::endl;
+    }
+
     putResourceRepresentation();
 }
 
@@ -258,6 +290,25 @@ int IoTServer::main(int argc, char *argv[])
         {
             delay = atoi(argv[1]);
         }
+
+        if ((argc > 2) && argv[2])
+        {
+            serv.m_offset = atof(argv[2]);
+        }
+
+        if ((argc > 3) && argv[3])
+        {
+            serv.m_lat = atof(argv[3]);
+        }
+
+        if ((argc > 4) && argv[4])
+        {
+            serv.m_lon = atof(argv[4]);
+        }
+
+        serv.m_latmax = serv.m_lat + 1;
+        serv.m_latmin = serv.m_lat - 1;
+
 
         do
         {

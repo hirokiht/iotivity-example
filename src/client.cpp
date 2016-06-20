@@ -178,6 +178,20 @@ void IoTClient::handle(const HeaderOptions headerOptions, const OCRepresentation
     rep.getValue( Config::m_key, line);
 
     std::cout << line << std::endl;
+
+    double lat = 0;
+    double lon = 0;
+
+    if (rep.hasAttribute("lat"))
+    {
+        lat = rep.getValue<double>("lat");
+    }
+    if (rep.hasAttribute("lon"))
+    {
+        lon = rep.getValue<double>("lon");
+    }
+
+    cout << "location: " << lat << ", " << lon << std::endl;
 }
 
 
