@@ -79,7 +79,7 @@ void Resource::onPut(const HeaderOptions &headerOptions, const OCRepresentation 
     }
     else
     {
-        cerr << "error: in PUT response: " << errCode<<  endl;
+        cerr << "error: in PUT response: " << eCode<<  endl;
     }
     IoTClient::DisplayMenu();
 }
