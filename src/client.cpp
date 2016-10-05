@@ -66,16 +66,16 @@ void Resource::onGet(const HeaderOptions &headerOptions, const OCRepresentation 
 }
 
 void Resource::onPut(const HeaderOptions &headerOptions, const OCRepresentation &representation,
-                     int errCode)
+                     int eCode)
 {
     LOG();
-    if (errCode == OC_STACK_OK \
-        || errCode == OC_STACK_RESOURCE_CREATED \
-        || errCode == OC_STACK_RESOURCE_CHANGED)
+    if (eCode == OC_STACK_OK \
+        || eCode == OC_STACK_RESOURCE_CREATED \
+        || eCode == OC_STACK_RESOURCE_CHANGED)
     {
         bool value;
         representation.getValue(Common::m_propname, value);
-        Platform::setValue(value);
+        cout << value << endl;
     }
     else
     {
