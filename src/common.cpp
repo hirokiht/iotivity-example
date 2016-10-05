@@ -38,7 +38,6 @@ Logger::Logger(const char * message)
 }
 
 Logger::~Logger()
-
 {
     std::cerr<<"log: } " << mMessage<<std::endl;
 }
