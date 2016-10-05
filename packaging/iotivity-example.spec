@@ -40,6 +40,10 @@ that share a binarry switch value as IoTivity resource.
 install -d %{buildroot}%{_unitdir}/network.target.wants
 install extra/iotivity-example.service \
   %{buildroot}%{_unitdir}/%{name}.service
+
+sed -e "s|ExecStart=.*|ExecStart=/opt/%{name}/server|g" -i \
+  %{buildroot}%{_unitdir}/%{name}.service
+
 #ln -s ../%{name}.service \
 #  %{buildroot}%{_unitdir}/network.target.wants/%{name}.service
 %install_service network.target.wants %{name}.service
@@ -48,12 +52,11 @@ install extra/iotivity-example.service \
 %fdupes %{buildroot}
 
 %post -p /sbin/ldconfig
-systemctl enable iotivity-example
+systemctl enable %{name}
 
 
-%postun -p /sbin/ldconfig
-systemctl disable iotivity-example
-# Created symlink from /etc/systemd/system/default.target.wants/iotivity-example.service to /usr/lib/systemd/system/iotivity-example.service.
+%postun -p /sbin/ldconfi
+systemctl disable %{name}
 
 
 %files
