@@ -196,7 +196,7 @@ OCEntityHandlerResult IoTServer::handleEntity(shared_ptr<OCResourceRequest> requ
             response->setRequestHandle(request->getRequestHandle());
             response->setResourceHandle(request->getResourceHandle());
 
-            if (requestType == "PUT")
+            if (requestType == "PUT"  || requestType == "POST")
             {
                 if (handlePut(request) == OC_STACK_OK)
                 {
