@@ -1,11 +1,12 @@
 SUMMARY = "IoTivity Switch Example"
-DESCRIPTION = "Minimalist Iotivity Client/Server application that control single LED resource using GPIO"
+DESCRIPTION = "Minimalist Iotivity Client/Server application that control single ON/OFF resource"
 HOMEPAGE = "https://github.com/TizenTeam/iotivity-example"
 SECTION = "apps"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 SRCREV = "master"
+SRCREV = "sandbox/pcoval/switch"
 SRC_URI = "git://github.com/TizenTeam/iotivity-example.git/;protocol=http;nobranch=1"
 
 S = "${WORKDIR}/git"
@@ -21,8 +22,6 @@ DEPENDS_${PN} += "iotivity-resource-dev iotivity-resource-thin-staticdev iotivit
 
 BBCLASSEXTEND = "native nativesdk"
 RDEPENDS_${PN} += " iotivity-resource "
-
-EXTRA_OEMAKE = " package=${PN} config_mraa=${config_mraa} "
 
 SYSTEMD_SERVICE_${PN} = "${PN}.service"
 
