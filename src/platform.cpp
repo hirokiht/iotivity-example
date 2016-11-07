@@ -41,6 +41,7 @@ Platform::~Platform()
 void Platform::setValue(bool value)
 {
     LOG();
+    cerr << "gpio=" << Platform::m_gpio << endl;
     cout << value << endl;
     digitalPinWrite(Platform::m_gpio, value);
 }
@@ -52,10 +53,9 @@ void Platform::setup(int argc, char *argv[])
     int gpio = m_gpio;
     if (argc>1 && argv[1])
     {
-        gpio = atoi(argv[1]);
+        m_gpio = atoi(argv[1]);
     }
-    if (pinMode(gpio,Platform::OUTPUT))
-        m_gpio = gpio;
+    pinMode(gpio,Platform::OUTPUT);
 }
 
 
@@ -69,7 +69,7 @@ bool Platform::pinMode(int gpio, int mode)
     FILE * fd;
     char fName[128];
 
-    cerr << "gpio=" << gpio <<endl;
+    cerr << "gpio=" << gpio << endl;
 
     if((fd = fopen("/sys/class/gpio/export", "w")) == NULL)
     {
