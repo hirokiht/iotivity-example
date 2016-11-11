@@ -13,7 +13,7 @@ app_profile_version_alpha?=$(shell echo ${app_profile_version} | tr '.' '_')
 tizen_studio_package?=${app_profile_upcase}-${app_profile_version}-NativeAppDevelopment-CLI
 tizen_profile?=tizen_${app_profile_version_alpha}_${app_profile}
 gbs_arch?=armv7l
-gbs_profile?=tizen_${app_profile_version_alpha}_${gbs_arch}
+gbs_profile?=tizen_${app_profile_version_alpha}_${app_profile}_${gbs_arch}
 #
 project_name?=iotivity-example
 app_package_exe?=iotivityexample
@@ -23,8 +23,6 @@ srcs+=lib
 iotivity_logo_url?=https://www.iotivity.org/sites/all/themes/iotivity/logo.png
 #all?=shared/res/logo.png
 #all+=tmp/512x512.png
-all+=rpm
-srcs+=lib
 srcs+=usr
 
 
@@ -35,15 +33,15 @@ make=${MAKE} -f ${self}
 export make
 MAKEFLAGS=-j1
 tmpdir?=${CURDIR}/tmp
-gbsdir?=${tmpdir}/out/${project_name}/${profile}/tmp/gbs/tmp-GBS-${gbs_profile}/
-gbsdir?="${HOME}/tmp/gbs/tmp-GBS-${gbs_profile}/"
-rootfs="${gbsdir}/local/BUILD-ROOTS/scratch.${arch}.0/"
-rpmdir="${gbsdir}/local/repos/${gbs_profile}/${arch}/RPMS/"
+gbsdir?=${tmpdir}/out/${project_name}/${tizen_profile}/tmp/gbs/tmp-GBS-${gbs_profile}/
+#gbsdir="${HOME}/tmp/gbs/tmp-GBS-${gbs_profile}/"
+rootfs="${gbsdir}/local/BUILD-ROOTS/scratch.${gbs_arch}.0/"
+rpmdir="${gbsdir}/local/repos/${gbs_profile}/${gbs_arch}/RPMS/"
 devel_rpm?=$(shell \
- ls ${rpmdir}/iotivity-devel-${version}*-*${arch}.rpm 2>/dev/null \
+ ls ${rpmdir}/iotivity-devel-${iotivity_version}*-*${gbs_arch}.rpm 2>/dev/null \
  || echo TODO)
 rpm?=$(shell \
- ls ${rpmdir}/iotivity-[0-9]*-*${arch}.rpm 2>/dev/null\
+ ls ${rpmdir}/iotivity-[0-9]*-*${gbs_arch}.rpm 2>/dev/null\
  || echo TODO)
 srcs?=$(shell find src lib)
 
@@ -80,7 +78,9 @@ rpm: ${rpm}
 rpms: ${rpmdir} ${rpm} ${rpm_devel}
 
 ls:
+	ls ${gbsdir}
 	ls ${rpmdir}
+	ls ${rootfs}
 	ls ${rpmdir}/iotivity-[0-9]*-*${arch}.rpm
 
 
