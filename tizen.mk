@@ -1,6 +1,6 @@
 #! /usr/bin/make -f
 
-default: bootstrap local/all
+default: local/rpm local/usr local/lib local/all
 	date
 
 
@@ -21,8 +21,8 @@ package_version?=1.0.0
 app_package_name?=org.example.${app_package_exe}
 srcs+=lib
 iotivity_logo_url?=https://www.iotivity.org/sites/all/themes/iotivity/logo.png
-all?=shared/res/logo.png
-all+=tmp/512x512.png
+#all?=shared/res/logo.png
+#all+=tmp/512x512.png
 all+=rpm
 srcs+=lib
 srcs+=usr
@@ -53,7 +53,7 @@ tizen_helper_dir?=tmp/tizen-helper
 
 ### Rules ###
 
-local/%:
+local/%: bootstrap
 	${make} ${@F}
 
 distclean: clean
